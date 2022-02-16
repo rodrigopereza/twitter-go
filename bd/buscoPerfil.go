@@ -19,12 +19,13 @@ func BuscoPerfil(ID string) (models.Usuario, error) {
 	col := db.Collection("usuarios")
 
 	var perfil models.Usuario
+
 	objID, _ := primitive.ObjectIDFromHex(ID)
 
-	condicion := bson.M{
-		"_id": objID,
-	}
+	condicion := bson.M{"_id": objID}
+
 	err := col.FindOne(ctx, condicion).Decode(&perfil)
+
 	perfil.Password = ""
 
 	if err != nil {
@@ -32,5 +33,5 @@ func BuscoPerfil(ID string) (models.Usuario, error) {
 		return perfil, err
 	}
 
-	return perfil, bson.ErrDecodeToNil
+	return perfil, nil
 }

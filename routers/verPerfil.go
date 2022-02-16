@@ -13,6 +13,7 @@ func VerPerfil(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Debe enviar el parametro Id", http.StatusBadRequest)
 		return
 	}
+
 	perfil, err := db.BuscoPerfil(ID)
 
 	if err != nil {
