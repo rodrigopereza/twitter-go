@@ -11,7 +11,7 @@ import (
 )
 
 func SubirAvatar(w http.ResponseWriter, r *http.Request) {
-	file, handler, err := r.FormFile("avatar")
+	file, handler, _ := r.FormFile("avatar")
 	var extension = strings.Split(handler.Filename, ".")[1]
 	var archivo string = "uploads/avatars/" + IDUsuario + "." + extension
 
@@ -33,7 +33,7 @@ func SubirAvatar(w http.ResponseWriter, r *http.Request) {
 	usuario.Avatar = IDUsuario + "." + extension
 	status, err = db.ModificoRegistro(usuario, IDUsuario)
 
-	if err != nil || status == false {
+	if err != nil || !status {
 		http.Error(w, "Error al grabar el avatar en la DB "+err.Error(), http.StatusBadRequest)
 		return
 	}
